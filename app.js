@@ -1,18 +1,25 @@
-//引入express框架
+// 1.引入express
 const express = require('express')
-
-//创建引用
-const app = express()
-//引入路由模块
+// 引入路由模块
 const router = require('./router/index.js')
-//添加对指定端口的监听
+// 引入ejs
+const ejs = require('ejs')
+// 2.创建应用
+const app = express()
+// 3.添加对指定端口的监听
 app.listen(3000, () => {
-    console.log('the server is running at http://127.0.0.1:3000')
+    console.log('http://127.0.0.1:3000')
 })
 
-//设置静态资源的托管
+// 设置模板引擎为ejs
+app.set('view engine', 'ejs')
+// 指定模板文件的目录 ，后期使用ejs的时候就可以参照这个目录进行ejs文件查询
+app.set('views', 'views')
+
+// 4.添加静态资源的托管
 app.use('/assets', express.static('assets'))
 app.use('/uploads', express.static('uploads'))
 
-//添加路由配置
+// 5.添加路由配置
+// use:让app应用来使用这个路由进行所有的用户请求的路由管理,这个views目录 是相对于根目录 而言
 app.use(router)
