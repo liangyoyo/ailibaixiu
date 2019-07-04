@@ -1,5 +1,6 @@
 //引入users表的控制器模块
 const usersController = require('../controller/usersController')
+const postsController = require('../controller/postsController')
 const express = require('express')
 const router = express.Router()
 //添加路由句柄
@@ -21,6 +22,7 @@ router.get('/', usersController.getIndexPage)
     .get('/admin/settings', usersController.getSettingsPage)
     .get('/admin/slides', usersController.getSlidesPage)
     .get('/admin/users', usersController.getUsersPage)
+    .get('/getPostList', postsController.getPostList)
 
 //向外暴露
 module.exports = router
