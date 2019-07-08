@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
 //打开链接,会默认找到最近的数据库进行链接
 exports.getAllCateList = (callback) => {
     var sql = 'select * from categories'
-    connection.query = (sql, (err, results) => {
+    connection.query(sql, (err, results) => {
         if (err) {
             callback(err)
         } else {

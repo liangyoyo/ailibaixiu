@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
 
 exports.getPostList = (params, callback) => {
     //创建sql语句
-    var sql = `select posts.id,posts.slug,posts.title,posts.feature,posts.created,posts.content,posts.status,users.id,users.nickname,categories.name
+    var sql = `select posts.id pid,posts.slug,posts.title,posts.feature,posts.created,posts.content,posts.status,users.id uid,users.nickname,categories.name
     from posts
     inner join users on posts.user_id = users.id
     inner join categories on posts.category_id = categories.id
@@ -22,13 +22,15 @@ exports.getPostList = (params, callback) => {
 
     //根据判断条件拼接筛选条件
     if (params.cate) {
-        sql += `and posts.category_id = ${params.cate}`
+        sql += ` and posts.category_id = ${params.cate}`
     }
     if (params.statu) {
-        sql += `and posts.status =${params.statu}`
+        sql += ` and posts.status = '${params.statu}'`
     }
     sql += ` order by posts.id desc 
     limit ${(params.pagenum - 1) * params.pagesize}, ${params.pagesize} `
+
+    console.log(sql);
     connection.query(sql, (err, results) => {
         console.log(err);
         if (err) {

@@ -1,5 +1,7 @@
 //引入模板引擎
 const fs = require('fs')
+//引入module模块
+const usersModule = require('../modules/usersModule.js')
 //读取前台页面
 module.exports.getIndexPage = (req, res) => {
     res.render('index.ejs')
@@ -55,3 +57,39 @@ module.exports.getSlidesPage = (req, res) => {
 module.exports.getUsersPage = (req, res) => {
     res.render('admin/users.ejs')
 }
+module.exports.login = (req, res) => {
+    var obj = req.body
+    usersModule.login(obj.email, (err, data) => {
+        if (err) {
+            res.json({
+                code: 400,
+                msg: '服务器异常'
+            })
+        } else {
+            if (data) {
+                if (data.password == obj.password) {
+                    //以session的形式实现状态保持,这里写入session数据
+                    req.session.islogin = 'true'
+                    //将当前用户对象存储到session
+                    req.session.currentUser = data
+                    //当将成功登陆的用户信息进行存储,以便我们后续进行获取
+                    res.end(JSON.stringify({
+                        code: 200,
+                        msg: '登录成功'
+                    }))
+                } else {
+                    res.json({
+                        code: 400,
+                        msg: '密码输入错误'
+                    })
+                }
+            } else {
+                res.json({
+                    code: 400,
+                    msg: '邮箱输入错误'
+                })
+            }
+        }
+    })
+}
+

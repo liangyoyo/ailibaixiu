@@ -1,7 +1,7 @@
 //引入module模块
 const cateModule = require('../modules/cateModule.js')
 module.exports.getAllCateList = (req, res) => {
-    cateModule.getAllCateList = (err, data) => {
+    cateModule.getAllCateList((err, data) => {
         if (err) {
             console.log(err)
             res.json({
@@ -9,11 +9,12 @@ module.exports.getAllCateList = (req, res) => {
                 msg: "查询数据失败"
             })
         } else {
+            console.log(err)
             res.json({
                 code: 200,
                 msg: "查询数据成功",
                 data: data
             })
         }
-    }
+    })
 }

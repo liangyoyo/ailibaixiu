@@ -1,5 +1,4 @@
 const postsModule = require('../modules/postsModule.js')
-const cateModule = require('../modules/cateModule.js')
 const moment = require('moment')
 
 module.exports.getPostList = (req, res) => {
@@ -38,4 +37,8 @@ module.exports.delPostsById = (req, res) => {
             })
         }
     })
+}
+module.exports.addPost = (req, res) => {
+    var obj = req.body
+    console.log(obj)
 }

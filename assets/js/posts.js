@@ -6,8 +6,8 @@ $(function () {
     //发起ajax请求,请求所有文章数据
     init({});
     //实现用户数据的筛选
-    $('.btn-search').on('click', function (event) {
-        event.preventDefault()
+    $('.btn-search').on('click', function (e) {
+        e.preventDefault()
         var query = {}
         //判断用户有没有选择指定的筛选条件
         if ($('.cateSelector').val() != 'all') {
@@ -62,7 +62,7 @@ $(function () {
         $(".pagination").bootstrapPaginator({
             bootstrapMajorVersion: 3, //版本
 
-            numberOfPages: pagenum, //最多显示Page页
+            currentPage: pagenum, //显示第几页
 
             totalPages: count, //所有数据可以显示的页数
 
@@ -79,15 +79,19 @@ $(function () {
     }
     //使用事件委托的方式来实现文章数据的删除
     $('tbody').on('click', '.btndel', function () {
-        //获取id
-        var id = $(this).data('id')
-        $.ajax({
-            type: 'get',
-            url: 'delPostsById',
-            data: { id: id },
-            success: (res) => {
-                console.log(res)
-            }
-        })
+        if (window.confirm('请问你是否真的需要删除?')) {
+
+            //获取id
+            var id = $(this).data('id')
+            $.ajax({
+                type: 'get',
+                url: 'delPostsById',
+                data: { id: id },
+                success: (res) => {
+                    console.log(res)
+                    init(query)
+                }
+            })
+        }
     })
 })

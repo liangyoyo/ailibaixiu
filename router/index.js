@@ -2,6 +2,8 @@
 const usersController = require('../controller/usersController')
 const postsController = require('../controller/postsController')
 const cateController = require('../controller/cateController')
+const uploadsController = require('../controller/uploadsController')
+
 
 const express = require('express')
 const router = express.Router()
@@ -24,10 +26,17 @@ router.get('/', usersController.getIndexPage)
     .get('/admin/settings', usersController.getSettingsPage)
     .get('/admin/slides', usersController.getSlidesPage)
     .get('/admin/users', usersController.getUsersPage)
+    //获取所有文章数据
     .get('/getPostList', postsController.getPostList)
-    .get('/getAllCateList', cateController.getAllCateList)
     .get('/delPostsById', postsController.delPostsById)
+    .post('/addPost', postsController.addPost)
+    //获取所有分类数据
+    .get('/getAllCateList', cateController.getAllCateList)
 
+    //文件上传
+    .post('/uploadsFile', uploadsController.uploadsFile)
+    //添加用户登录路由
+    .post('/login', usersController.login)
 
 //向外暴露
 module.exports = router
